@@ -25,6 +25,8 @@ hs_err_pid*
 HELP.md
 /.src
 /.idea
+.src
+.idea
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
