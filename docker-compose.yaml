@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  db:
+    container_name: aries_mysql
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    # restart: always
+    tty: true
+    environment:
+      MYSQL_DATABASE: aries
+      MYSQL_ROOT_PASSWORD: root_119J6uMKlCD
+      MYSQL_PASSWORD: aries_6xz888!YfQ
+      MYSQL_USER: aries
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - ./db:/var/lib/mysql
+
+  app:
+    container_name: aries_api
+    depends_on:
+      - db
+    build: ./
+    restart: on-failure
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.datasource.url"  : "jdbc:mysql://db:3306/aries?autoReconnect=true&serverTimezone=UTC&useSSL=false&noAccessToProcedureBodies=true",
+          "spring.datasource.username" : "aries",
+          "spring.datasource.password" : "aries_6xz888!YfQ",
+          "spring.datasource-mysql.type": "com.zaxxer.hikari.HikariDataSource",
+          "spring.datasource-mysql.driver-class-name": "com.mysql.jdbc.Driver"
+        }'
+
+    volumes:
+      - .src:/root/.m2
+    stdin_open: true
+    tty: true
+
+networks:
+  aries-treine:
+    driver: bridge
+
