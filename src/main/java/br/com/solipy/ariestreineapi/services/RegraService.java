@@ -19,7 +19,7 @@ public class RegraService {
 
     private final RegraRepository regraRepository;
 
-    public List<Regra> getRegraList(String nome, Boolean status) {
+    public List<Regra> obterListaRegra(String nome, Boolean status) {
         QRegra qRegra = QRegra.regra;
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -32,11 +32,11 @@ public class RegraService {
         return (List<Regra>) regraRepository.findAll(builder);
     }
 
-    public Regra createRegra(Regra regra) {
+    public Regra criarRegra(Regra regra) {
         return regraRepository.save(regra);
     }
 
-    public Regra updateRegra(Long id, Regra regra) {
+    public Regra atualizarRegra(Long id, Regra regra) {
         Optional<Regra> optionalRegra = regraRepository.findById(id);
         if(optionalRegra.isPresent()) {
             Regra newRegra = optionalRegra.get();

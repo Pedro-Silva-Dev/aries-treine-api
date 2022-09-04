@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +21,31 @@ import java.util.List;
 public class Usuario {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+
+    @NotNull
+    @NotEmpty
     protected String nome;
 
     @JsonIgnore
+    @NotNull @NotEmpty
     protected String password;
+
+    @NotNull @NotEmpty
     protected String username;
 
     @Column(name = "conta_ativa")
-    private Boolean isAccountNonExpired;
+    private Boolean isAccountNonExpired = true;
 
     @Column(name = "conta_liberada")
-    private Boolean isAccountNonLocked;
+    private Boolean isAccountNonLocked = true;
 
     @Column(name = "permissoes_ativas")
-    private Boolean isCredentialsNonExpired;
+    private Boolean isCredentialsNonExpired = true;
 
     @Column(name = "ativo")
-    private Boolean isEnabled;
+    private Boolean isEnabled = true;
 
     @JsonBackReference
     @ManyToOne

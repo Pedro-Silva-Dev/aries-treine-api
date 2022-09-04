@@ -20,21 +20,21 @@ public class RegraController {
 
     private final RegraService regraService;
 
-    @GetMapping("/list.json")
-    public ResponseEntity<List<Regra>> getRegraList(@RequestParam(required = false) String nome, @RequestParam(required = false) Boolean status) {
-        List<Regra> list = regraService.getRegraList(nome, status);
+    @GetMapping("/lista.json")
+    public ResponseEntity<List<Regra>> obterListaRegra(@RequestParam(required = false) String nome, @RequestParam(required = false) Boolean status) {
+        List<Regra> list = regraService.obterListaRegra(nome, status);
         return ResponseEntity.status(HttpStatus.OK.value()).body(list);
     }
 
-    @PostMapping("/create.json")
-    public ResponseEntity<Regra> createRegra(@Valid @RequestBody Regra regra) {
-        Regra save = regraService.createRegra(regra);
+    @PostMapping("/criar.json")
+    public ResponseEntity<Regra> criarRegra(@Valid @RequestBody Regra regra) {
+        Regra save = regraService.criarRegra(regra);
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(save);
     }
 
     @PutMapping("/{id}.json")
-    public ResponseEntity<Regra> updateRegra(@PathVariable Long id, @RequestBody Regra regra) {
-        Regra save = regraService.updateRegra(id, regra);
+    public ResponseEntity<Regra> atualizarRegra(@PathVariable Long id, @RequestBody Regra regra) {
+        Regra save = regraService.atualizarRegra(id, regra);
         return Objects.nonNull(save) ? ResponseEntity.status(HttpStatus.CREATED.value()).body(save) : ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(null);
     }
 

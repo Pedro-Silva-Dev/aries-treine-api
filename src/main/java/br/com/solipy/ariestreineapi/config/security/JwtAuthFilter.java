@@ -50,8 +50,6 @@ public class JwtAuthFilter extends AbstractAuthenticationProcessingFilter {
         try {
             LoginForm loginForm = new ObjectMapper()
                     .readValue(request.getInputStream(), LoginForm.class);
-
-            log.info("Username: {}, Password: {}", loginForm.getUsername(), loginForm.getPassword());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginForm.getUsername(),
                     loginForm.getPassword(),
@@ -65,7 +63,6 @@ public class JwtAuthFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("TOKENNNNNNNNNN SUCESSSS");
         UserDetail userDetail = (UserDetail) authResult.getPrincipal();
         String token = generateToken(authResult);
         response.getWriter().write(token);
@@ -77,7 +74,6 @@ public class JwtAuthFilter extends AbstractAuthenticationProcessingFilter {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + connection.getJwtExpirationInMs());
         Algorithm algorithm = Algorithm.HMAC512(connection.getJwtSecret());
-        log.info("TOKENNNNNNNNNN GENERATE");
         String token = JWT.create()
                 .withSubject(hashidService.get(32).encode(user.getId()))
                 .withClaim("name", user.getNome())

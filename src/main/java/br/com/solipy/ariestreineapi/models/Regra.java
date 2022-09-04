@@ -29,7 +29,7 @@ public class Regra {
     @NotNull
     private Boolean ativo;
 
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regra")
-    private List<Usuario> usuarios;
+    public Regra(Long id) {
+        this.id = id;
+    }
 }
